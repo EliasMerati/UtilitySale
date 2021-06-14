@@ -1,0 +1,197 @@
+﻿<Window x:Class="UtilitySale.App._ٌWindows.WinShowChecks"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UtilitySale.App._ٌWindows"
+        mc:Ignorable="d"
+        Title="WinShowChecks" Height="550" Width="940" FlowDirection="RightToLeft" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True" FontFamily="b nazanin" FontSize="14" Loaded="Window_Loaded">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="550" RadiusY="10" RadiusX="10" Stroke="#FFFCFF00" VerticalAlignment="Top" Width="940" MouseDown="Rectangle_MouseDown">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.003"/>
+                    <GradientStop Color="#F24F4F4F" Offset="0.136"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image HorizontalAlignment="Left" Cursor="Hand" Height="20" Margin="10,10,0,0" VerticalAlignment="Top" Width="20" Source="/UtilitySale.App;component/Resources/223.png" MouseDown="Image_MouseDown">
+            <Image.Effect>
+                <DropShadowEffect/>
+            </Image.Effect>
+        </Image>
+        <DataGrid x:Name="dgvCheck" FlowDirection="RightToLeft" AutoGenerateColumns="False" Margin="0,92,0,10" Background="{x:Null}" BorderBrush="#FFFFD900" VerticalGridLinesBrush="White" HorizontalGridLinesBrush="#FF7B6600" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="کد چک" Binding="{Binding CheckID}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="70"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FFF94802"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="شماره چک" Binding="{Binding Checknumber}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="140"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FF634503"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="تاریخ چک" Binding="{Binding CheckDate}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="100"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FF035109"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="مبلغ چک" Binding="{Binding CheckPrice, StringFormat=n0}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="200"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FF043D6C"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="توضیحات چک" Binding="{Binding CheckDesc}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="320"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FF1D0133"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="وضعیت" Binding="{Binding CheckType}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="HorizontalAlignment" Value="Left"/>
+                            <Setter Property="Width" Value="60"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="FontFamily" Value="a hamase"/>
+                            <Setter Property="Foreground" Value="#FF6D0459"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="عملیات پاس کردن چک"  FontFamily="a hamase" FontSize="12" Foreground="Black" Click="pas_click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" FontSize="12" Margin="58,47,0,0" TextWrapping="Wrap" Text="جستجو:"  VerticalAlignment="Top" Width="47" Foreground="White" RenderTransformOrigin="0.373,0.479" />
+        <Button x:Name="btnRefresh" Content="بروزرسانی جدول" HorizontalAlignment="Left" TabIndex="2" FontFamily="a hamase" Margin="600,47,0,0" VerticalAlignment="Top" Width="115" Background="{x:Null}" BorderBrush="#FFFFCB00" Foreground="#FFFF8600" Click="btnRefresh_Click" Height="23" FontSize="12">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBox x:Name="txtsearch" FontWeight="Bold" FontFamily="a hamase" HorizontalAlignment="Left" Height="23" Margin="110,47,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="485" Background="{x:Null}" Foreground="#FFFAFD42" BorderBrush="#FFFAC302" TextChanged="txtsearch_TextChanged"/>
+
+    </Grid>
+</Window>

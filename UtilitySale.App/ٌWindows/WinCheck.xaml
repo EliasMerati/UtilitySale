@@ -1,0 +1,76 @@
+﻿<Window x:Class="UtilitySale.App._ٌWindows.WinCheck"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UtilitySale.App._ٌWindows"
+        mc:Ignorable="d"
+        Title="WinCheck" Height="400" Width="600" Background="Transparent" FlowDirection="LeftToRight" AllowsTransparency="True" FontFamily="a hamase" WindowStartupLocation="CenterScreen" WindowStyle="None" Loaded="Window_Loaded">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="400" RadiusY="10" RadiusX="10" Stroke="#FFFCFF00" VerticalAlignment="Top" Width="600" MouseDown="Rectangle_MouseDown">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.003"/>
+                    <GradientStop Color="#F24F4F4F" Offset="0.136"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Image HorizontalAlignment="Left" Cursor="Hand" Height="20" Margin="570,10,0,0" VerticalAlignment="Top" Width="20" Source="/UtilitySale.App;component/Resources/223.png" MouseDown="Image_MouseDown">
+            <Image.Effect>
+                <DropShadowEffect/>
+            </Image.Effect>
+        </Image>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="343,28,0,0" TextWrapping="Wrap" Text="نام مشتری:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBox x:Name="txtChecknumber" TabIndex="0" MaxLength="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="43,85,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="505" Background="{x:Null}" Foreground="#FFFAED9D" BorderBrush="#FFFAC302" FontSize="16" PreviewTextInput="txtChecknumber_PreviewTextInput" FontWeight="Bold"/>
+        <Label Content="..." x:Name="lblpeople" HorizontalAlignment="Left" HorizontalContentAlignment="Right" FontFamily="a hamase" VerticalContentAlignment="Center" Margin="179,19,0,0" VerticalAlignment="Top" Width="159" Height="38" FontSize="16" Foreground="#FFE47605" FontStyle="Italic"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="480,57,0,0" TextWrapping="Wrap" Text="شماره چک:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBox x:Name="txtCheckdate" TabIndex="1" HorizontalContentAlignment="Center" FlowDirection="RightToLeft" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="314,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="234" Background="{x:Null}" Foreground="#FFFAED9D" BorderBrush="#FFFAC302" FontSize="16" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="480,122,0,0" TextWrapping="Wrap" Text="تاریخ چک:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBox x:Name="txtCheckprice" TabIndex="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="74,222,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="474" Background="{x:Null}" Foreground="#FFFAED9D" BorderBrush="#FFFAC302" FontSize="16" PreviewTextInput="txtCheckprice_PreviewTextInput" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="480,194,0,0" TextWrapping="Wrap" Text="مبلغ چک:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBox x:Name="txtdesc" TabIndex="4" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="60" Margin="43,282,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="505" Background="{x:Null}" Foreground="#FFFAED9D" BorderBrush="#FFFAC302"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="480,254,0,0" TextWrapping="Wrap" Text="توضیحات:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Button x:Name="btnSave" Content="ثبت" HorizontalAlignment="Left" TabIndex="6" FontFamily="a hamase" Margin="43,365,0,0" VerticalAlignment="Top" Width="127" Background="{x:Null}" BorderBrush="#FF1AFF00" Foreground="#FF31FF00" Click="btnSave_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" FontSize="12" Margin="480,365,0,0" TextWrapping="Wrap" Text=":وضعیت"  VerticalAlignment="Top" Width="89" Foreground="White" RenderTransformOrigin="0.373,0.479" />
+        <ComboBox x:Name="cmbtype" TabIndex="5" HorizontalAlignment="Left" FontFamily="a hamase" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="263,360,0,0" VerticalAlignment="Top" Width="209" RenderTransformOrigin="0.009,-0.515">
+            <ComboBoxItem Content="پاس شده"/>
+            <ComboBoxItem Content="پاس نشده"/>
+        </ComboBox>
+        <TextBox x:Name="txtBank" TabIndex="2" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="42,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="218" Background="{x:Null}" Foreground="#FFFAED9D" BorderBrush="#FFFAC302" PreviewTextInput="txtBank_PreviewTextInput"/>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="149,122,0,0" TextWrapping="Wrap" Text="بانک صادر کننده:" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" FontFamily="a hamase" Margin="43,222,0,0" TextWrapping="Wrap" Text="ریال" FlowDirection="RightToLeft" VerticalAlignment="Top" Foreground="#FFF1ECC5" FontSize="14" Width="26">
+            <TextBlock.Effect>
+                <DropShadowEffect/>
+            </TextBlock.Effect>
+        </TextBlock>
+
+    </Grid>
+</Window>

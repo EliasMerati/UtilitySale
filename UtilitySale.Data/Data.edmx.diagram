@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c38c09a59746432db69b79f5fd6f9611" Name="Diagram1">
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Company" Width="1.5" PointX="5.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.InvoiceItem" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Payment" Width="1.5" PointX="3.75" PointY="13.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.People" Width="1.5" PointX="1.5" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Product" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.ProductPrice" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.ProductSuply" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.vw_Items" Width="1.5" PointX="5.75" PointY="4.25" IsExpanded="true" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_InvoiceItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_Payment_People" ManuallyRouted="false" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_ProductPrice_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_ProductSuply_Product" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Tax" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Invoice" Width="1.5" PointX="3.75" PointY="17.5" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_Invoice_Customer" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_InvoiceItem_Invoice" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.vw_Invoice2" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Account" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.vw_total" Width="1.5" PointX="9.375" PointY="4.75" />
+        <EntityTypeShape EntityType="UtilitySale_DBModel.Check" Width="1.5" PointX="3.75" PointY="21.5" />
+        <AssociationConnector Association="UtilitySale_DBModel.FK_Check_People" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
