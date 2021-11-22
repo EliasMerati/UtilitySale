@@ -17,9 +17,9 @@ namespace UtilitySale.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public People()
         {
-            this.Payment = new HashSet<Payment>();
-            this.Invoice = new HashSet<Invoice>();
             this.Check = new HashSet<Check>();
+            this.Invoice = new HashSet<Invoice>();
+            this.Payment = new HashSet<Payment>();
         }
     
         public int PeopleID { get; set; }
@@ -31,10 +31,10 @@ namespace UtilitySale.Data
         public string PeopleType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment> Payment { get; set; }
+        public virtual ICollection<Check> Check { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invoice> Invoice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Check> Check { get; set; }
+        public virtual ICollection<Payment> Payment { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using UtilitySale.Data;
 using Stimulsoft.Report;
+using Stimulsoft.Base;
 
 namespace UtilitySale.App._ٌWindows
 {
@@ -20,6 +21,8 @@ namespace UtilitySale.App._ٌWindows
         UtilitySale_DBEntities db = new UtilitySale_DBEntities();
         public string PName { get; set; }
         public int pid { get; set; }
+        
+
         
 
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)

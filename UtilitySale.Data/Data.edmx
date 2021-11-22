@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="UtilitySale_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="UtilitySale_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -557,10 +557,37 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
             <End Role="ProductSuply" EntitySet="ProductSuply" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UtilitySale_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountShaba" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountCart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountBank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountShobeh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Check">
+          <Key>
+            <PropertyRef Name="CheckID" />
+          </Key>
+          <Property Name="CheckID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="peopleID" Type="Int32" Nullable="false" />
+          <Property Name="Checknumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CheckBank" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CheckPrice" Type="Int64" />
+          <Property Name="CheckType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheckDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Check_People" FromRole="Check" ToRole="People" />
+        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="CompanyID" />
@@ -570,6 +597,19 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <Property Name="CompanyTel" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="CompanyMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CompanyDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InvoicePricenottax" Type="Int64" />
+          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
+          <Property Name="peopleID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="People" Relationship="Self.FK_Invoice_People" FromRole="Invoice" ToRole="People" />
+          <NavigationProperty Name="InvoiceItem" Relationship="Self.FK_InvoiceItem_Invoice" FromRole="Invoice" ToRole="InvoiceItem" />
         </EntityType>
         <EntityType Name="InvoiceItem">
           <Key>
@@ -581,8 +621,8 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <Property Name="InvoiceItemFeeTotal" Type="Int64" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="InvoiceID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_InvoiceItem_Invoice" FromRole="InvoiceItem" ToRole="Invoice" />
           <NavigationProperty Name="Product" Relationship="Self.FK_InvoiceItem_Product" FromRole="InvoiceItem" ToRole="Product" />
-          <NavigationProperty Name="Invoice" Relationship="UtilitySale_DBModel.FK_InvoiceItem_Invoice" FromRole="InvoiceItem" ToRole="Invoice" />
         </EntityType>
         <EntityType Name="Payment">
           <Key>
@@ -607,9 +647,9 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <Property Name="PeopleDeptor" Type="Int64" />
           <Property Name="PeopleCreditor" Type="Int64" />
           <Property Name="PeopleType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Check" Relationship="Self.FK_Check_People" FromRole="People" ToRole="Check" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK_Invoice_People" FromRole="People" ToRole="Invoice" />
           <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_People" FromRole="People" ToRole="Payment" />
-          <NavigationProperty Name="Invoice" Relationship="UtilitySale_DBModel.FK_Invoice_Customer" FromRole="People" ToRole="Invoice" />
-          <NavigationProperty Name="Check" Relationship="UtilitySale_DBModel.FK_Check_People" FromRole="People" ToRole="Check" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -647,24 +687,111 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <Property Name="ProductSuplyDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductSuply_Product" FromRole="ProductSuply" ToRole="Product" />
         </EntityType>
+        <EntityType Name="Tax">
+          <Key>
+            <PropertyRef Name="TaxID" />
+          </Key>
+          <Property Name="TaxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxAmount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vw_Invoice2">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+            <PropertyRef Name="InvoiceDate" />
+            <PropertyRef Name="InvoicePrice" />
+            <PropertyRef Name="peopleID" />
+            <PropertyRef Name="PeopleName" />
+          </Key>
+          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InvoicePricenottax" Type="Int64" />
+          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
+          <Property Name="peopleID" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PeopleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="vw_Items">
           <Key>
+            <PropertyRef Name="ProductName" />
             <PropertyRef Name="InvoiceItemID" />
             <PropertyRef Name="InvoiceItemcount" />
             <PropertyRef Name="InvoiceItemFee" />
             <PropertyRef Name="InvoiceItemFeeTotal" />
             <PropertyRef Name="ProductID" />
             <PropertyRef Name="InvoiceID" />
-            <PropertyRef Name="ProductName" />
           </Key>
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="InvoiceItemID" Type="Int32" Nullable="false" />
           <Property Name="InvoiceItemcount" Type="Int32" Nullable="false" />
           <Property Name="InvoiceItemFee" Type="Int64" Nullable="false" />
           <Property Name="InvoiceItemFeeTotal" Type="Int64" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="InvoiceID" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="vw_total">
+          <Key>
+            <PropertyRef Name="InvoicePrice" />
+            <PropertyRef Name="InvoiceDate" />
+            <PropertyRef Name="InvoiceID" />
+            <PropertyRef Name="PeopleID" />
+            <PropertyRef Name="PeopleName" />
+            <PropertyRef Name="InvoiceItemcount" />
+            <PropertyRef Name="InvoiceItemFee" />
+            <PropertyRef Name="InvoiceItemFeeTotal" />
+            <PropertyRef Name="ProductName" />
+            <PropertyRef Name="ProductUnit" />
+          </Key>
+          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
+          <Property Name="InvoicePricenottax" Type="Int64" />
+          <Property Name="InvoiceDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
+          <Property Name="PeopleID" Type="Int32" Nullable="false" />
+          <Property Name="PeopleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PeopleTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PeopleAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InvoiceItemcount" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceItemFee" Type="Int64" Nullable="false" />
+          <Property Name="InvoiceItemFeeTotal" Type="Int64" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Check_People">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Check" Type="Self.Check" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="PeopleID" />
+            </Principal>
+            <Dependent Role="Check">
+              <PropertyRef Name="peopleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_People">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="PeopleID" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="peopleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvoiceItem_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="InvoiceID" />
+            </Principal>
+            <Dependent Role="InvoiceItem">
+              <PropertyRef Name="InvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InvoiceItem_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="InvoiceItem" Type="Self.InvoiceItem" Multiplicity="*" />
@@ -714,14 +841,32 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="UtilitySale_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="Check" EntityType="Self.Check" />
           <EntitySet Name="Company" EntityType="Self.Company" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" />
           <EntitySet Name="InvoiceItem" EntityType="Self.InvoiceItem" />
           <EntitySet Name="Payment" EntityType="Self.Payment" />
           <EntitySet Name="People" EntityType="Self.People" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="ProductPrice" EntityType="Self.ProductPrice" />
           <EntitySet Name="ProductSuply" EntityType="Self.ProductSuply" />
+          <EntitySet Name="Tax" EntityType="Self.Tax" />
+          <EntitySet Name="vw_Invoice2" EntityType="Self.vw_Invoice2" />
           <EntitySet Name="vw_Items" EntityType="Self.vw_Items" />
+          <EntitySet Name="vw_total" EntityType="Self.vw_total" />
+          <AssociationSet Name="FK_Check_People" Association="Self.FK_Check_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="Check" EntitySet="Check" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_People" Association="Self.FK_Invoice_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvoiceItem_Invoice" Association="Self.FK_InvoiceItem_Invoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceItem" EntitySet="InvoiceItem" />
+          </AssociationSet>
           <AssociationSet Name="FK_InvoiceItem_Product" Association="Self.FK_InvoiceItem_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="InvoiceItem" EntitySet="InvoiceItem" />
@@ -738,25 +883,54 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductSuply" EntitySet="ProductSuply" />
           </AssociationSet>
+          <FunctionImport Name="CheckPassed">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CloseInvoice">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="Price" Mode="In" Type="Int64" />
+            <Parameter Name="Pricetax" Mode="In" Type="Int64" />
+            <Parameter Name="desc" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="CreateInvoice">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="date" Mode="In" Type="String" />
             <Parameter Name="price" Mode="In" Type="Int64" />
             <Parameter Name="desc" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="DeleteCheck">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="DeletePeople">
-          <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePrice">
-          <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteProduct">
-          <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteSuply">
-          <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetLastInvoiceID" ReturnType="Collection(UtilitySale_DBModel.GetLastInvoiceID_Result)" />
+          <FunctionImport Name="InsertAccount">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="number" Mode="In" Type="String" />
+            <Parameter Name="shaba" Mode="In" Type="String" />
+            <Parameter Name="cart" Mode="In" Type="String" />
+            <Parameter Name="bank" Mode="In" Type="String" />
+            <Parameter Name="shobe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertCheck">
+            <Parameter Name="pid" Mode="In" Type="Int32" />
+            <Parameter Name="number" Mode="In" Type="String" />
+            <Parameter Name="date" Mode="In" Type="String" />
+            <Parameter Name="bank" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Int64" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="desc" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="InsertCompany">
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="tel" Mode="In" Type="String" />
@@ -771,6 +945,13 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
             <Parameter Name="feetotal" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="InsertPay">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="Pay" Mode="In" Type="Int64" />
+            <Parameter Name="date" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="save" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPayment">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="Pay" Mode="In" Type="Int64" />
             <Parameter Name="date" Mode="In" Type="String" />
@@ -804,12 +985,55 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
             <Parameter Name="status" Mode="In" Type="String" />
             <Parameter Name="desc" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="InsertTax">
+            <Parameter Name="amount" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MinesDeptor">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="deptor" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="peopleinvoice" ReturnType="Collection(UtilitySale_DBModel.peopleinvoice_Result)">
+            <Parameter Name="id3" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RemoveFromInvoice">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id2" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SelectPeople" ReturnType="Collection(UtilitySale_DBModel.SelectPeople_Result)" />
+          <FunctionImport Name="Show" ReturnType="Collection(UtilitySale_DBModel.Show_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="show2" ReturnType="Collection(UtilitySale_DBModel.show2_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ShowInvoice" ReturnType="Collection(UtilitySale_DBModel.ShowInvoice_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="ShowPayment" ReturnType="Collection(UtilitySale_DBModel.ShowPayment_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="showPeople" ReturnType="Collection(UtilitySale_DBModel.showPeople_Result)" />
           <FunctionImport Name="showProduct" ReturnType="Collection(UtilitySale_DBModel.showProduct_Result)" />
+          <FunctionImport Name="total" ReturnType="Collection(Int64)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateAccount">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="number" Mode="In" Type="String" />
+            <Parameter Name="shaba" Mode="In" Type="String" />
+            <Parameter Name="cart" Mode="In" Type="String" />
+            <Parameter Name="bank" Mode="In" Type="String" />
+            <Parameter Name="shobe" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateCheck">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="number" Mode="In" Type="String" />
+            <Parameter Name="date" Mode="In" Type="String" />
+            <Parameter Name="bank" Mode="In" Type="String" />
+            <Parameter Name="price" Mode="In" Type="Int64" />
+            <Parameter Name="type" Mode="In" Type="String" />
+            <Parameter Name="desc" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="UpdateCompany">
             <Parameter Name="name" Mode="In" Type="String" />
             <Parameter Name="tel" Mode="In" Type="String" />
@@ -857,118 +1081,66 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="suply" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="InsertTax">
-          <Parameter Name="amount" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="UpdateTax">
-          <Parameter Name="amount" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="RemoveFromInvoice">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="id2" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Tax" EntityType="UtilitySale_DBModel.Tax" />
-          <FunctionImport Name="CloseInvoice">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="Price" Mode="In" Type="Int64" />
-            <Parameter Name="Pricetax" Mode="In" Type="Int64" />
-            <Parameter Name="desc" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="total" ReturnType="Collection(Int64)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ShowInvoice" ReturnType="Collection(UtilitySale_DBModel.ShowInvoice_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Invoice" EntityType="UtilitySale_DBModel.Invoice" />
-          <AssociationSet Name="FK_Invoice_Customer" Association="UtilitySale_DBModel.FK_Invoice_Customer">
-            <End Role="People" EntitySet="People" />
-            <End Role="Invoice" EntitySet="Invoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InvoiceItem_Invoice" Association="UtilitySale_DBModel.FK_InvoiceItem_Invoice">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="InvoiceItem" EntitySet="InvoiceItem" />
-          </AssociationSet>
-          <EntitySet Name="vw_Invoice2" EntityType="UtilitySale_DBModel.vw_Invoice2" />
-          <EntitySet Name="Account" EntityType="UtilitySale_DBModel.Account" />
-          <FunctionImport Name="InsertAccount">
-            <Parameter Name="name" Mode="In" Type="String" />
-            <Parameter Name="number" Mode="In" Type="String" />
-            <Parameter Name="shaba" Mode="In" Type="String" />
-            <Parameter Name="cart" Mode="In" Type="String" />
-            <Parameter Name="bank" Mode="In" Type="String" />
-            <Parameter Name="shobe" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateAccount">
-            <Parameter Name="name" Mode="In" Type="String" />
-            <Parameter Name="number" Mode="In" Type="String" />
-            <Parameter Name="shaba" Mode="In" Type="String" />
-            <Parameter Name="cart" Mode="In" Type="String" />
-            <Parameter Name="bank" Mode="In" Type="String" />
-            <Parameter Name="shobe" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="vw_total" EntityType="UtilitySale_DBModel.vw_total" />
-          <FunctionImport Name="peopleinvoice" ReturnType="Collection(UtilitySale_DBModel.peopleinvoice_Result)">
-          <Parameter Name="id3" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="Show" ReturnType="Collection(UtilitySale_DBModel.Show_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="show2" ReturnType="Collection(UtilitySale_DBModel.show2_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Check" EntityType="UtilitySale_DBModel.Check" />
-          <AssociationSet Name="FK_Check_People" Association="UtilitySale_DBModel.FK_Check_People">
-            <End Role="People" EntitySet="People" />
-            <End Role="Check" EntitySet="Check" />
-          </AssociationSet>
-          <FunctionImport Name="CheckPassed">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteCheck">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="InsertCheck">
-            <Parameter Name="pid" Mode="In" Type="Int32" />
-            <Parameter Name="number" Mode="In" Type="String" />
-            <Parameter Name="date" Mode="In" Type="String" />
-            <Parameter Name="bank" Mode="In" Type="String" />
-            <Parameter Name="price" Mode="In" Type="Int64" />
-            <Parameter Name="type" Mode="In" Type="String" />
-            <Parameter Name="desc" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateCheck">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="number" Mode="In" Type="String" />
-            <Parameter Name="date" Mode="In" Type="String" />
-            <Parameter Name="bank" Mode="In" Type="String" />
-            <Parameter Name="price" Mode="In" Type="Int64" />
-            <Parameter Name="type" Mode="In" Type="String" />
-            <Parameter Name="desc" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="InsertPayment">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="Pay" Mode="In" Type="Int64" />
-            <Parameter Name="date" Mode="In" Type="String" />
-            <Parameter Name="status" Mode="In" Type="String" />
-            <Parameter Name="save" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="MinesDeptor">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="deptor" Mode="In" Type="Int64" />
+            <Parameter Name="amount" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetLastInvoiceID_Result">
           <Property Type="Int32" Name="InvoiceID" Nullable="false" />
           <Property Type="String" Name="InvoiceDate" Nullable="false" MaxLength="10" />
+          <Property Type="Int64" Name="InvoicePricenottax" Nullable="true" />
           <Property Type="Int64" Name="InvoicePrice" Nullable="false" />
           <Property Type="Int32" Name="peopleID" Nullable="false" />
           <Property Type="String" Name="InvoiceDesc" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="peopleinvoice_Result">
+          <Property Type="Int32" Name="PeopleID" Nullable="false" />
+          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="PeopleTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PeopleAddress" Nullable="true" />
+          <Property Type="Int64" Name="PeopleDeptor" Nullable="true" />
+          <Property Type="Int64" Name="PeopleCreditor" Nullable="true" />
+          <Property Type="String" Name="PeopleType" Nullable="true" MaxLength="20" />
         </ComplexType>
         <ComplexType Name="SelectPeople_Result">
           <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="PeopleTel" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="PeopleID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Show_Result">
+          <Property Type="String" Name="Idate" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Idesc" Nullable="true" />
+          <Property Type="Int64" Name="IPrice" Nullable="false" />
+          <Property Type="Int64" Name="totalprice" Nullable="true" />
+          <Property Type="Int32" Name="Icont" Nullable="false" />
+          <Property Type="Int64" Name="Ifee" Nullable="false" />
+          <Property Type="Int64" Name="total" Nullable="false" />
+          <Property Type="String" Name="Pname" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="show2_Result">
+          <Property Type="Int64" Name="InvoicePrice" Nullable="false" />
+          <Property Type="Int64" Name="InvoicePricenottax" Nullable="true" />
+          <Property Type="String" Name="InvoiceDate" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="InvoiceID" Nullable="false" />
+          <Property Type="Int32" Name="PeopleID" Nullable="false" />
+          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="PeopleTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PeopleAddress" Nullable="true" />
+          <Property Type="Int32" Name="InvoiceItemcount" Nullable="false" />
+          <Property Type="Int64" Name="InvoiceItemFee" Nullable="false" />
+          <Property Type="Int64" Name="InvoiceItemFeeTotal" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="ProductUnit" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="InvoiceDesc" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ShowInvoice_Result">
+          <Property Type="Int32" Name="InvoiceID" Nullable="false" />
+          <Property Type="String" Name="InvoiceDate" Nullable="false" MaxLength="10" />
+          <Property Type="Int64" Name="InvoicePricenottax" Nullable="true" />
+          <Property Type="Int64" Name="InvoicePrice" Nullable="false" />
+          <Property Type="Int32" Name="peopleID" Nullable="false" />
+          <Property Type="String" Name="InvoiceDesc" Nullable="true" />
+          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
         </ComplexType>
         <ComplexType Name="ShowPayment_Result">
           <Property Type="Int32" Name="PaymentID" Nullable="false" />
@@ -995,180 +1167,39 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <Property Type="String" Name="ProductUnit" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ProductDesc" Nullable="true" />
         </ComplexType>
-        <EntityType Name="Tax">
-          <Key>
-            <PropertyRef Name="TaxID" />
-          </Key>
-          <Property Name="TaxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaxAmount" Type="Int32" />
-        </EntityType>
-        <ComplexType Name="ShowInvoice_Result">
-          <Property Type="Int32" Name="InvoiceID" Nullable="false" />
-          <Property Type="String" Name="InvoiceDate" Nullable="false" MaxLength="10" />
-          <Property Type="Int64" Name="InvoicePrice" Nullable="false" />
-          <Property Type="Int32" Name="peopleID" Nullable="false" />
-          <Property Type="String" Name="InvoiceDesc" Nullable="true" />
-          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
-        </ComplexType>
-        <EntityType Name="Invoice">
-          <Key>
-            <PropertyRef Name="InvoiceID" />
-          </Key>
-          <Property Name="InvoiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InvoiceDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="InvoicePricenottax" Type="Int64" />
-          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
-          <Property Name="peopleID" Type="Int32" Nullable="false" />
-          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="People" Relationship="UtilitySale_DBModel.FK_Invoice_Customer" FromRole="Invoice" ToRole="People" />
-          <NavigationProperty Name="InvoiceItem" Relationship="UtilitySale_DBModel.FK_InvoiceItem_Invoice" FromRole="Invoice" ToRole="InvoiceItem" />
-        </EntityType>
-        <Association Name="FK_Invoice_Customer">
-          <End Type="UtilitySale_DBModel.People" Role="People" Multiplicity="1" />
-          <End Type="UtilitySale_DBModel.Invoice" Role="Invoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="PeopleID" />
-            </Principal>
-            <Dependent Role="Invoice">
-              <PropertyRef Name="peopleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InvoiceItem_Invoice">
-          <End Type="UtilitySale_DBModel.Invoice" Role="Invoice" Multiplicity="1" />
-          <End Type="UtilitySale_DBModel.InvoiceItem" Role="InvoiceItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceID" />
-            </Principal>
-            <Dependent Role="InvoiceItem">
-              <PropertyRef Name="InvoiceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="vw_Invoice2">
-          <Key>
-            <PropertyRef Name="InvoiceID" />
-            <PropertyRef Name="InvoiceDate" />
-            <PropertyRef Name="InvoicePrice" />
-            <PropertyRef Name="peopleID" />
-            <PropertyRef Name="PeopleName" />
-          </Key>
-          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
-          <Property Name="InvoiceDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="InvoicePricenottax" Type="Int64" />
-          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
-          <Property Name="peopleID" Type="Int32" Nullable="false" />
-          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PeopleName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="AccountID" />
-          </Key>
-          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccountName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountShaba" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountCart" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountBank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AccountShobeh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vw_total">
-          <Key>
-            <PropertyRef Name="InvoiceDate" />
-            <PropertyRef Name="InvoicePrice" />
-            <PropertyRef Name="InvoiceItemcount" />
-            <PropertyRef Name="InvoiceItemFee" />
-            <PropertyRef Name="InvoiceItemFeeTotal" />
-            <PropertyRef Name="ProductName" />
-            <PropertyRef Name="PeopleName" />
-            <PropertyRef Name="InvoiceID" />
-            <PropertyRef Name="PeopleID" />
-            <PropertyRef Name="ProductUnit" />
-          </Key>
-          <Property Name="InvoiceDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="InvoicePricenottax" Type="Int64" />
-          <Property Name="InvoicePrice" Type="Int64" Nullable="false" />
-          <Property Name="InvoiceItemcount" Type="Int32" Nullable="false" />
-          <Property Name="InvoiceItemFee" Type="Int64" Nullable="false" />
-          <Property Name="InvoiceItemFeeTotal" Type="Int64" Nullable="false" />
-          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PeopleName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PeopleAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PeopleTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceID" Type="Int32" Nullable="false" />
-          <Property Name="PeopleID" Type="Int32" Nullable="false" />
-          <Property Name="ProductUnit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <ComplexType Name="peopleinvoice_Result">
-          <Property Type="Int32" Name="PeopleID" Nullable="false" />
-          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="PeopleTel" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PeopleAddress" Nullable="true" />
-          <Property Type="Int64" Name="PeopleDeptor" Nullable="true" />
-          <Property Type="Int64" Name="PeopleCreditor" Nullable="true" />
-          <Property Type="String" Name="PeopleType" Nullable="true" MaxLength="20" />
-        </ComplexType>
-        <ComplexType Name="Show_Result">
-          <Property Type="String" Name="Idate" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Idesc" Nullable="true" />
-          <Property Type="Int64" Name="IPrice" Nullable="false" />
-          <Property Type="Int64" Name="totalprice" Nullable="true" />
-          <Property Type="Int32" Name="Icont" Nullable="false" />
-          <Property Type="Int64" Name="Ifee" Nullable="false" />
-          <Property Type="Int64" Name="total" Nullable="false" />
-          <Property Type="String" Name="Pname" Nullable="false" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="show2_Result">
-          <Property Type="String" Name="InvoiceDate" Nullable="false" MaxLength="10" />
-          <Property Type="Int64" Name="InvoicePricenottax" Nullable="true" />
-          <Property Type="Int64" Name="InvoicePrice" Nullable="false" />
-          <Property Type="Int32" Name="InvoiceItemcount" Nullable="false" />
-          <Property Type="Int64" Name="InvoiceItemFee" Nullable="false" />
-          <Property Type="Int64" Name="InvoiceItemFeeTotal" Nullable="false" />
-          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="PeopleName" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="PeopleAddress" Nullable="true" />
-          <Property Type="String" Name="PeopleTel" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="InvoiceID" Nullable="false" />
-          <Property Type="Int32" Name="PeopleID" Nullable="false" />
-          <Property Type="String" Name="ProductUnit" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <EntityType Name="Check">
-          <Key>
-            <PropertyRef Name="CheckID" />
-          </Key>
-          <Property Name="CheckID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="peopleID" Type="Int32" Nullable="false" />
-          <Property Name="Checknumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CheckDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CheckBank" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="CheckPrice" Type="Int64" />
-          <Property Name="CheckType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CheckDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="People" Relationship="UtilitySale_DBModel.FK_Check_People" FromRole="Check" ToRole="People" />
-        </EntityType>
-        <Association Name="FK_Check_People">
-          <End Type="UtilitySale_DBModel.People" Role="People" Multiplicity="1" />
-          <End Type="UtilitySale_DBModel.Check" Role="Check" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="PeopleID" />
-            </Principal>
-            <Dependent Role="Check">
-              <PropertyRef Name="peopleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="UtilitySale_DBModelStoreContainer" CdmEntityContainer="UtilitySale_DBEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+                <ScalarProperty Name="AccountShaba" ColumnName="AccountShaba" />
+                <ScalarProperty Name="AccountCart" ColumnName="AccountCart" />
+                <ScalarProperty Name="AccountBank" ColumnName="AccountBank" />
+                <ScalarProperty Name="AccountShobeh" ColumnName="AccountShobeh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Check">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.Check">
+              <MappingFragment StoreEntitySet="Check">
+                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
+                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
+                <ScalarProperty Name="Checknumber" ColumnName="Checknumber" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="CheckBank" ColumnName="CheckBank" />
+                <ScalarProperty Name="CheckPrice" ColumnName="CheckPrice" />
+                <ScalarProperty Name="CheckType" ColumnName="CheckType" />
+                <ScalarProperty Name="CheckDesc" ColumnName="CheckDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="UtilitySale_DBModel.Company">
               <MappingFragment StoreEntitySet="Company">
@@ -1177,6 +1208,18 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
                 <ScalarProperty Name="CompanyTel" ColumnName="CompanyTel" />
                 <ScalarProperty Name="CompanyMobile" ColumnName="CompanyMobile" />
                 <ScalarProperty Name="CompanyDesc" ColumnName="CompanyDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoice">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
+                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1251,20 +1294,64 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tax">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.Tax">
+              <MappingFragment StoreEntitySet="Tax">
+                <ScalarProperty Name="TaxID" ColumnName="TaxID" />
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_Invoice2">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.vw_Invoice2">
+              <MappingFragment StoreEntitySet="vw_Invoice2">
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
+                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
+                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vw_Items">
             <EntityTypeMapping TypeName="UtilitySale_DBModel.vw_Items">
               <MappingFragment StoreEntitySet="vw_Items">
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="InvoiceItemID" ColumnName="InvoiceItemID" />
                 <ScalarProperty Name="InvoiceItemcount" ColumnName="InvoiceItemcount" />
                 <ScalarProperty Name="InvoiceItemFee" ColumnName="InvoiceItemFee" />
                 <ScalarProperty Name="InvoiceItemFeeTotal" ColumnName="InvoiceItemFeeTotal" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_total">
+            <EntityTypeMapping TypeName="UtilitySale_DBModel.vw_total">
+              <MappingFragment StoreEntitySet="vw_total">
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
+                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
+                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
+                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
+                <ScalarProperty Name="InvoiceItemcount" ColumnName="InvoiceItemcount" />
+                <ScalarProperty Name="InvoiceItemFee" ColumnName="InvoiceItemFee" />
+                <ScalarProperty Name="InvoiceItemFeeTotal" ColumnName="InvoiceItemFeeTotal" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CheckPassed" FunctionName="UtilitySale_DBModel.Store.CheckPassed" />
+          <FunctionImportMapping FunctionImportName="CloseInvoice" FunctionName="UtilitySale_DBModel.Store.CloseInvoice" />
           <FunctionImportMapping FunctionImportName="CreateInvoice" FunctionName="UtilitySale_DBModel.Store.CreateInvoice" />
+          <FunctionImportMapping FunctionImportName="DeleteCheck" FunctionName="UtilitySale_DBModel.Store.DeleteCheck" />
           <FunctionImportMapping FunctionImportName="DeletePeople" FunctionName="UtilitySale_DBModel.Store.DeletePeople" />
           <FunctionImportMapping FunctionImportName="DeletePrice" FunctionName="UtilitySale_DBModel.Store.DeletePrice" />
           <FunctionImportMapping FunctionImportName="DeleteProduct" FunctionName="UtilitySale_DBModel.Store.DeleteProduct" />
@@ -1274,25 +1361,92 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
               <ComplexTypeMapping TypeName="UtilitySale_DBModel.GetLastInvoiceID_Result">
                 <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
                 <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
                 <ScalarProperty Name="peopleID" ColumnName="peopleID" />
                 <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertAccount" FunctionName="UtilitySale_DBModel.Store.InsertAccount" />
+          <FunctionImportMapping FunctionImportName="InsertCheck" FunctionName="UtilitySale_DBModel.Store.InsertCheck" />
           <FunctionImportMapping FunctionImportName="InsertCompany" FunctionName="UtilitySale_DBModel.Store.InsertCompany" />
           <FunctionImportMapping FunctionImportName="InsertItems" FunctionName="UtilitySale_DBModel.Store.InsertItems" />
           <FunctionImportMapping FunctionImportName="InsertPay" FunctionName="UtilitySale_DBModel.Store.InsertPay" />
+          <FunctionImportMapping FunctionImportName="InsertPayment" FunctionName="UtilitySale_DBModel.Store.InsertPayment" />
           <FunctionImportMapping FunctionImportName="InsertPeople" FunctionName="UtilitySale_DBModel.Store.InsertPeople" />
           <FunctionImportMapping FunctionImportName="insertPrice" FunctionName="UtilitySale_DBModel.Store.insertPrice" />
           <FunctionImportMapping FunctionImportName="InsertProduct" FunctionName="UtilitySale_DBModel.Store.InsertProduct" />
           <FunctionImportMapping FunctionImportName="InsertSuply" FunctionName="UtilitySale_DBModel.Store.InsertSuply" />
+          <FunctionImportMapping FunctionImportName="InsertTax" FunctionName="UtilitySale_DBModel.Store.InsertTax" />
+          <FunctionImportMapping FunctionImportName="MinesDeptor" FunctionName="UtilitySale_DBModel.Store.MinesDeptor" />
+          <FunctionImportMapping FunctionImportName="peopleinvoice" FunctionName="UtilitySale_DBModel.Store.peopleinvoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UtilitySale_DBModel.peopleinvoice_Result">
+                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
+                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
+                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
+                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
+                <ScalarProperty Name="PeopleDeptor" ColumnName="PeopleDeptor" />
+                <ScalarProperty Name="PeopleCreditor" ColumnName="PeopleCreditor" />
+                <ScalarProperty Name="PeopleType" ColumnName="PeopleType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RemoveFromInvoice" FunctionName="UtilitySale_DBModel.Store.RemoveFromInvoice" />
           <FunctionImportMapping FunctionImportName="SelectPeople" FunctionName="UtilitySale_DBModel.Store.SelectPeople">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UtilitySale_DBModel.SelectPeople_Result">
                 <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
                 <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
                 <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Show" FunctionName="UtilitySale_DBModel.Store.Show">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UtilitySale_DBModel.Show_Result">
+                <ScalarProperty Name="Idate" ColumnName="Idate" />
+                <ScalarProperty Name="Idesc" ColumnName="Idesc" />
+                <ScalarProperty Name="IPrice" ColumnName="IPrice" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="Icont" ColumnName="Icont" />
+                <ScalarProperty Name="Ifee" ColumnName="Ifee" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="Pname" ColumnName="Pname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="show2" FunctionName="UtilitySale_DBModel.Store.show2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UtilitySale_DBModel.show2_Result">
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
+                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
+                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
+                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
+                <ScalarProperty Name="InvoiceItemcount" ColumnName="InvoiceItemcount" />
+                <ScalarProperty Name="InvoiceItemFee" ColumnName="InvoiceItemFee" />
+                <ScalarProperty Name="InvoiceItemFeeTotal" ColumnName="InvoiceItemFeeTotal" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ShowInvoice" FunctionName="UtilitySale_DBModel.Store.ShowInvoice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UtilitySale_DBModel.ShowInvoice_Result">
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
+                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
+                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1333,6 +1487,9 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="total" FunctionName="UtilitySale_DBModel.Store.total" />
+          <FunctionImportMapping FunctionImportName="UpdateAccount" FunctionName="UtilitySale_DBModel.Store.UpdateAccount" />
+          <FunctionImportMapping FunctionImportName="UpdateCheck" FunctionName="UtilitySale_DBModel.Store.UpdateCheck" />
           <FunctionImportMapping FunctionImportName="UpdateCompany" FunctionName="UtilitySale_DBModel.Store.UpdateCompany" />
           <FunctionImportMapping FunctionImportName="UpdateCreditor" FunctionName="UtilitySale_DBModel.Store.UpdateCreditor" />
           <FunctionImportMapping FunctionImportName="UpdateDeptor1" FunctionName="UtilitySale_DBModel.Store.UpdateDeptor1" />
@@ -1342,157 +1499,7 @@ warning 6002: The table/view 'UtilitySale_DB.dbo.vw_total' does not have a prima
           <FunctionImportMapping FunctionImportName="UpdateProduct" FunctionName="UtilitySale_DBModel.Store.UpdateProduct" />
           <FunctionImportMapping FunctionImportName="Updatesuply1" FunctionName="UtilitySale_DBModel.Store.Updatesuply1" />
           <FunctionImportMapping FunctionImportName="Updatesuply2" FunctionName="UtilitySale_DBModel.Store.Updatesuply2" />
-          <FunctionImportMapping FunctionImportName="InsertTax" FunctionName="UtilitySale_DBModel.Store.InsertTax" />
           <FunctionImportMapping FunctionImportName="UpdateTax" FunctionName="UtilitySale_DBModel.Store.UpdateTax" />
-          <FunctionImportMapping FunctionImportName="RemoveFromInvoice" FunctionName="UtilitySale_DBModel.Store.RemoveFromInvoice" />
-          <EntitySetMapping Name="Tax">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.Tax">
-              <MappingFragment StoreEntitySet="Tax">
-                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
-                <ScalarProperty Name="TaxID" ColumnName="TaxID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="CloseInvoice" FunctionName="UtilitySale_DBModel.Store.CloseInvoice" />
-          <FunctionImportMapping FunctionImportName="total" FunctionName="UtilitySale_DBModel.Store.total" />
-          <FunctionImportMapping FunctionImportName="ShowInvoice" FunctionName="UtilitySale_DBModel.Store.ShowInvoice">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UtilitySale_DBModel.ShowInvoice_Result">
-                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
-                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
-                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
-                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Invoice">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.Invoice">
-              <MappingFragment StoreEntitySet="Invoice">
-                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
-                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
-                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
-                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_Invoice2">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.vw_Invoice2">
-              <MappingFragment StoreEntitySet="vw_Invoice2">
-                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
-                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
-                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
-                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
-                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Account">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="AccountShobeh" ColumnName="AccountShobeh" />
-                <ScalarProperty Name="AccountBank" ColumnName="AccountBank" />
-                <ScalarProperty Name="AccountCart" ColumnName="AccountCart" />
-                <ScalarProperty Name="AccountShaba" ColumnName="AccountShaba" />
-                <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="InsertAccount" FunctionName="UtilitySale_DBModel.Store.InsertAccount" />
-          <FunctionImportMapping FunctionImportName="UpdateAccount" FunctionName="UtilitySale_DBModel.Store.UpdateAccount" />
-          <EntitySetMapping Name="vw_total">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.vw_total">
-              <MappingFragment StoreEntitySet="vw_total">
-                <ScalarProperty Name="InvoiceDesc" ColumnName="InvoiceDesc" />
-                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
-                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
-                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
-                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
-                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="InvoiceItemFeeTotal" ColumnName="InvoiceItemFeeTotal" />
-                <ScalarProperty Name="InvoiceItemFee" ColumnName="InvoiceItemFee" />
-                <ScalarProperty Name="InvoiceItemcount" ColumnName="InvoiceItemcount" />
-                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
-                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="peopleinvoice" FunctionName="UtilitySale_DBModel.Store.peopleinvoice">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UtilitySale_DBModel.peopleinvoice_Result">
-                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
-                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
-                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
-                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
-                <ScalarProperty Name="PeopleDeptor" ColumnName="PeopleDeptor" />
-                <ScalarProperty Name="PeopleCreditor" ColumnName="PeopleCreditor" />
-                <ScalarProperty Name="PeopleType" ColumnName="PeopleType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Show" FunctionName="UtilitySale_DBModel.Store.Show">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UtilitySale_DBModel.Show_Result">
-                <ScalarProperty Name="Idate" ColumnName="Idate" />
-                <ScalarProperty Name="Idesc" ColumnName="Idesc" />
-                <ScalarProperty Name="IPrice" ColumnName="IPrice" />
-                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
-                <ScalarProperty Name="Icont" ColumnName="Icont" />
-                <ScalarProperty Name="Ifee" ColumnName="Ifee" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="Pname" ColumnName="Pname" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="show2" FunctionName="UtilitySale_DBModel.Store.show2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UtilitySale_DBModel.show2_Result">
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="InvoicePricenottax" ColumnName="InvoicePricenottax" />
-                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
-                <ScalarProperty Name="InvoiceItemcount" ColumnName="InvoiceItemcount" />
-                <ScalarProperty Name="InvoiceItemFee" ColumnName="InvoiceItemFee" />
-                <ScalarProperty Name="InvoiceItemFeeTotal" ColumnName="InvoiceItemFeeTotal" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="PeopleName" ColumnName="PeopleName" />
-                <ScalarProperty Name="PeopleAddress" ColumnName="PeopleAddress" />
-                <ScalarProperty Name="PeopleTel" ColumnName="PeopleTel" />
-                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
-                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
-                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Check">
-            <EntityTypeMapping TypeName="UtilitySale_DBModel.Check">
-              <MappingFragment StoreEntitySet="Check">
-                <ScalarProperty Name="CheckDesc" ColumnName="CheckDesc" />
-                <ScalarProperty Name="CheckType" ColumnName="CheckType" />
-                <ScalarProperty Name="CheckPrice" ColumnName="CheckPrice" />
-                <ScalarProperty Name="CheckBank" ColumnName="CheckBank" />
-                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
-                <ScalarProperty Name="Checknumber" ColumnName="Checknumber" />
-                <ScalarProperty Name="peopleID" ColumnName="peopleID" />
-                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="CheckPassed" FunctionName="UtilitySale_DBModel.Store.CheckPassed" />
-          <FunctionImportMapping FunctionImportName="DeleteCheck" FunctionName="UtilitySale_DBModel.Store.DeleteCheck" />
-          <FunctionImportMapping FunctionImportName="InsertCheck" FunctionName="UtilitySale_DBModel.Store.InsertCheck" />
-          <FunctionImportMapping FunctionImportName="UpdateCheck" FunctionName="UtilitySale_DBModel.Store.UpdateCheck" />
-          <FunctionImportMapping FunctionImportName="InsertPayment" FunctionName="UtilitySale_DBModel.Store.InsertPayment" />
-          <FunctionImportMapping FunctionImportName="MinesDeptor" FunctionName="UtilitySale_DBModel.Store.MinesDeptor" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -14,12 +14,12 @@ namespace UtilitySale.Data
     
     public partial class vw_Items
     {
+        public string ProductName { get; set; }
         public int InvoiceItemID { get; set; }
         public int InvoiceItemcount { get; set; }
         public long InvoiceItemFee { get; set; }
         public long InvoiceItemFeeTotal { get; set; }
         public int ProductID { get; set; }
         public int InvoiceID { get; set; }
-        public string ProductName { get; set; }
     }
 }

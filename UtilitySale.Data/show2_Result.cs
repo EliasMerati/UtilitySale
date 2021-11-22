@@ -13,18 +13,19 @@ namespace UtilitySale.Data
     
     public partial class show2_Result
     {
-        public string InvoiceDate { get; set; }
-        public Nullable<long> InvoicePricenottax { get; set; }
         public long InvoicePrice { get; set; }
+        public Nullable<long> InvoicePricenottax { get; set; }
+        public string InvoiceDate { get; set; }
+        public int InvoiceID { get; set; }
+        public int PeopleID { get; set; }
+        public string PeopleName { get; set; }
+        public string PeopleTel { get; set; }
+        public string PeopleAddress { get; set; }
         public int InvoiceItemcount { get; set; }
         public long InvoiceItemFee { get; set; }
         public long InvoiceItemFeeTotal { get; set; }
         public string ProductName { get; set; }
-        public string PeopleName { get; set; }
-        public string PeopleAddress { get; set; }
-        public string PeopleTel { get; set; }
-        public int InvoiceID { get; set; }
-        public int PeopleID { get; set; }
         public string ProductUnit { get; set; }
+        public string InvoiceDesc { get; set; }
     }
 }

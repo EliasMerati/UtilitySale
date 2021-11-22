@@ -27,20 +27,50 @@ namespace UtilitySale.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Check> Check { get; set; }
         public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<InvoiceItem> InvoiceItem { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<People> People { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductPrice> ProductPrice { get; set; }
         public virtual DbSet<ProductSuply> ProductSuply { get; set; }
-        public virtual DbSet<vw_Items> vw_Items { get; set; }
         public virtual DbSet<Tax> Tax { get; set; }
-        public virtual DbSet<Invoice> Invoice { get; set; }
         public virtual DbSet<vw_Invoice2> vw_Invoice2 { get; set; }
-        public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<vw_Items> vw_Items { get; set; }
         public virtual DbSet<vw_total> vw_total { get; set; }
-        public virtual DbSet<Check> Check { get; set; }
+    
+        public virtual int CheckPassed(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckPassed", idParameter);
+        }
+    
+        public virtual int CloseInvoice(Nullable<int> id, Nullable<long> price, Nullable<long> pricetax, string desc)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("Price", price) :
+                new ObjectParameter("Price", typeof(long));
+    
+            var pricetaxParameter = pricetax.HasValue ?
+                new ObjectParameter("Pricetax", pricetax) :
+                new ObjectParameter("Pricetax", typeof(long));
+    
+            var descParameter = desc != null ?
+                new ObjectParameter("desc", desc) :
+                new ObjectParameter("desc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CloseInvoice", idParameter, priceParameter, pricetaxParameter, descParameter);
+        }
     
         public virtual int CreateInvoice(Nullable<int> id, string date, Nullable<long> price, string desc)
         {
@@ -61,6 +91,15 @@ namespace UtilitySale.Data
                 new ObjectParameter("desc", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateInvoice", idParameter, dateParameter, priceParameter, descParameter);
+        }
+    
+        public virtual int DeleteCheck(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCheck", idParameter);
         }
     
         public virtual int DeletePeople(Nullable<int> id)
@@ -102,6 +141,68 @@ namespace UtilitySale.Data
         public virtual ObjectResult<GetLastInvoiceID_Result> GetLastInvoiceID()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetLastInvoiceID_Result>("GetLastInvoiceID");
+        }
+    
+        public virtual int InsertAccount(string name, string number, string shaba, string cart, string bank, string shobe)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var numberParameter = number != null ?
+                new ObjectParameter("number", number) :
+                new ObjectParameter("number", typeof(string));
+    
+            var shabaParameter = shaba != null ?
+                new ObjectParameter("shaba", shaba) :
+                new ObjectParameter("shaba", typeof(string));
+    
+            var cartParameter = cart != null ?
+                new ObjectParameter("cart", cart) :
+                new ObjectParameter("cart", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("bank", bank) :
+                new ObjectParameter("bank", typeof(string));
+    
+            var shobeParameter = shobe != null ?
+                new ObjectParameter("shobe", shobe) :
+                new ObjectParameter("shobe", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertAccount", nameParameter, numberParameter, shabaParameter, cartParameter, bankParameter, shobeParameter);
+        }
+    
+        public virtual int InsertCheck(Nullable<int> pid, string number, string date, string bank, Nullable<long> price, string type, string desc)
+        {
+            var pidParameter = pid.HasValue ?
+                new ObjectParameter("pid", pid) :
+                new ObjectParameter("pid", typeof(int));
+    
+            var numberParameter = number != null ?
+                new ObjectParameter("number", number) :
+                new ObjectParameter("number", typeof(string));
+    
+            var dateParameter = date != null ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("bank", bank) :
+                new ObjectParameter("bank", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("price", price) :
+                new ObjectParameter("price", typeof(long));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var descParameter = desc != null ?
+                new ObjectParameter("desc", desc) :
+                new ObjectParameter("desc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertCheck", pidParameter, numberParameter, dateParameter, bankParameter, priceParameter, typeParameter, descParameter);
         }
     
         public virtual int InsertCompany(string name, string tel, string mobile, string desc)
@@ -173,6 +274,31 @@ namespace UtilitySale.Data
                 new ObjectParameter("save", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPay", idParameter, payParameter, dateParameter, statusParameter, saveParameter);
+        }
+    
+        public virtual int InsertPayment(Nullable<int> id, Nullable<long> pay, string date, string status, string save)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var payParameter = pay.HasValue ?
+                new ObjectParameter("Pay", pay) :
+                new ObjectParameter("Pay", typeof(long));
+    
+            var dateParameter = date != null ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var saveParameter = save != null ?
+                new ObjectParameter("save", save) :
+                new ObjectParameter("save", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPayment", idParameter, payParameter, dateParameter, statusParameter, saveParameter);
         }
     
         public virtual int InsertPeople(string name, string tel, string address, Nullable<long> deptor, Nullable<long> creditor, string type)
@@ -271,9 +397,80 @@ namespace UtilitySale.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSuply", idParameter, suplyParameter, statusParameter, descParameter);
         }
     
+        public virtual int InsertTax(Nullable<int> amount)
+        {
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("amount", amount) :
+                new ObjectParameter("amount", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertTax", amountParameter);
+        }
+    
+        public virtual int MinesDeptor(Nullable<int> id, Nullable<long> deptor)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var deptorParameter = deptor.HasValue ?
+                new ObjectParameter("deptor", deptor) :
+                new ObjectParameter("deptor", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MinesDeptor", idParameter, deptorParameter);
+        }
+    
+        public virtual ObjectResult<peopleinvoice_Result> peopleinvoice(Nullable<int> id3)
+        {
+            var id3Parameter = id3.HasValue ?
+                new ObjectParameter("id3", id3) :
+                new ObjectParameter("id3", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<peopleinvoice_Result>("peopleinvoice", id3Parameter);
+        }
+    
+        public virtual int RemoveFromInvoice(Nullable<int> id, Nullable<int> id2)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var id2Parameter = id2.HasValue ?
+                new ObjectParameter("id2", id2) :
+                new ObjectParameter("id2", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveFromInvoice", idParameter, id2Parameter);
+        }
+    
         public virtual ObjectResult<SelectPeople_Result> SelectPeople()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SelectPeople_Result>("SelectPeople");
+        }
+    
+        public virtual ObjectResult<Show_Result> Show(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Show_Result>("Show", idParameter);
+        }
+    
+        public virtual ObjectResult<show2_Result> show2(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<show2_Result>("show2", idParameter);
+        }
+    
+        public virtual ObjectResult<ShowInvoice_Result> ShowInvoice(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowInvoice_Result>("ShowInvoice", idParameter);
         }
     
         public virtual ObjectResult<ShowPayment_Result> ShowPayment(Nullable<int> id)
@@ -293,6 +490,77 @@ namespace UtilitySale.Data
         public virtual ObjectResult<showProduct_Result> showProduct()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<showProduct_Result>("showProduct");
+        }
+    
+        public virtual ObjectResult<Nullable<long>> total(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("total", idParameter);
+        }
+    
+        public virtual int UpdateAccount(string name, string number, string shaba, string cart, string bank, string shobe)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var numberParameter = number != null ?
+                new ObjectParameter("number", number) :
+                new ObjectParameter("number", typeof(string));
+    
+            var shabaParameter = shaba != null ?
+                new ObjectParameter("shaba", shaba) :
+                new ObjectParameter("shaba", typeof(string));
+    
+            var cartParameter = cart != null ?
+                new ObjectParameter("cart", cart) :
+                new ObjectParameter("cart", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("bank", bank) :
+                new ObjectParameter("bank", typeof(string));
+    
+            var shobeParameter = shobe != null ?
+                new ObjectParameter("shobe", shobe) :
+                new ObjectParameter("shobe", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAccount", nameParameter, numberParameter, shabaParameter, cartParameter, bankParameter, shobeParameter);
+        }
+    
+        public virtual int UpdateCheck(Nullable<int> id, string number, string date, string bank, Nullable<long> price, string type, string desc)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var numberParameter = number != null ?
+                new ObjectParameter("number", number) :
+                new ObjectParameter("number", typeof(string));
+    
+            var dateParameter = date != null ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(string));
+    
+            var bankParameter = bank != null ?
+                new ObjectParameter("bank", bank) :
+                new ObjectParameter("bank", typeof(string));
+    
+            var priceParameter = price.HasValue ?
+                new ObjectParameter("price", price) :
+                new ObjectParameter("price", typeof(long));
+    
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var descParameter = desc != null ?
+                new ObjectParameter("desc", desc) :
+                new ObjectParameter("desc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCheck", idParameter, numberParameter, dateParameter, bankParameter, priceParameter, typeParameter, descParameter);
         }
     
         public virtual int UpdateCompany(string name, string tel, string mobile, string desc)
@@ -456,15 +724,6 @@ namespace UtilitySale.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Updatesuply2", idParameter, suplyParameter);
         }
     
-        public virtual int InsertTax(Nullable<int> amount)
-        {
-            var amountParameter = amount.HasValue ?
-                new ObjectParameter("amount", amount) :
-                new ObjectParameter("amount", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertTax", amountParameter);
-        }
-    
         public virtual int UpdateTax(Nullable<int> amount)
         {
             var amountParameter = amount.HasValue ?
@@ -472,265 +731,6 @@ namespace UtilitySale.Data
                 new ObjectParameter("amount", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateTax", amountParameter);
-        }
-    
-        public virtual int RemoveFromInvoice(Nullable<int> id, Nullable<int> id2)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var id2Parameter = id2.HasValue ?
-                new ObjectParameter("id2", id2) :
-                new ObjectParameter("id2", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveFromInvoice", idParameter, id2Parameter);
-        }
-    
-        public virtual int CloseInvoice(Nullable<int> id, Nullable<long> price, Nullable<long> pricetax, string desc)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var priceParameter = price.HasValue ?
-                new ObjectParameter("Price", price) :
-                new ObjectParameter("Price", typeof(long));
-    
-            var pricetaxParameter = pricetax.HasValue ?
-                new ObjectParameter("Pricetax", pricetax) :
-                new ObjectParameter("Pricetax", typeof(long));
-    
-            var descParameter = desc != null ?
-                new ObjectParameter("desc", desc) :
-                new ObjectParameter("desc", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CloseInvoice", idParameter, priceParameter, pricetaxParameter, descParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<long>> total(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("total", idParameter);
-        }
-    
-        public virtual ObjectResult<ShowInvoice_Result> ShowInvoice(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ShowInvoice_Result>("ShowInvoice", idParameter);
-        }
-    
-        public virtual int InsertAccount(string name, string number, string shaba, string cart, string bank, string shobe)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var numberParameter = number != null ?
-                new ObjectParameter("number", number) :
-                new ObjectParameter("number", typeof(string));
-    
-            var shabaParameter = shaba != null ?
-                new ObjectParameter("shaba", shaba) :
-                new ObjectParameter("shaba", typeof(string));
-    
-            var cartParameter = cart != null ?
-                new ObjectParameter("cart", cart) :
-                new ObjectParameter("cart", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("bank", bank) :
-                new ObjectParameter("bank", typeof(string));
-    
-            var shobeParameter = shobe != null ?
-                new ObjectParameter("shobe", shobe) :
-                new ObjectParameter("shobe", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertAccount", nameParameter, numberParameter, shabaParameter, cartParameter, bankParameter, shobeParameter);
-        }
-    
-        public virtual int UpdateAccount(string name, string number, string shaba, string cart, string bank, string shobe)
-        {
-            var nameParameter = name != null ?
-                new ObjectParameter("name", name) :
-                new ObjectParameter("name", typeof(string));
-    
-            var numberParameter = number != null ?
-                new ObjectParameter("number", number) :
-                new ObjectParameter("number", typeof(string));
-    
-            var shabaParameter = shaba != null ?
-                new ObjectParameter("shaba", shaba) :
-                new ObjectParameter("shaba", typeof(string));
-    
-            var cartParameter = cart != null ?
-                new ObjectParameter("cart", cart) :
-                new ObjectParameter("cart", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("bank", bank) :
-                new ObjectParameter("bank", typeof(string));
-    
-            var shobeParameter = shobe != null ?
-                new ObjectParameter("shobe", shobe) :
-                new ObjectParameter("shobe", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateAccount", nameParameter, numberParameter, shabaParameter, cartParameter, bankParameter, shobeParameter);
-        }
-    
-        public virtual ObjectResult<peopleinvoice_Result> peopleinvoice(Nullable<int> id3)
-        {
-            var id3Parameter = id3.HasValue ?
-                new ObjectParameter("id3", id3) :
-                new ObjectParameter("id3", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<peopleinvoice_Result>("peopleinvoice", id3Parameter);
-        }
-    
-        public virtual ObjectResult<Show_Result> Show(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Show_Result>("Show", idParameter);
-        }
-    
-        public virtual ObjectResult<show2_Result> show2(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<show2_Result>("show2", idParameter);
-        }
-    
-        public virtual int CheckPassed(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CheckPassed", idParameter);
-        }
-    
-        public virtual int DeleteCheck(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCheck", idParameter);
-        }
-    
-        public virtual int InsertCheck(Nullable<int> pid, string number, string date, string bank, Nullable<long> price, string type, string desc)
-        {
-            var pidParameter = pid.HasValue ?
-                new ObjectParameter("pid", pid) :
-                new ObjectParameter("pid", typeof(int));
-    
-            var numberParameter = number != null ?
-                new ObjectParameter("number", number) :
-                new ObjectParameter("number", typeof(string));
-    
-            var dateParameter = date != null ?
-                new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("bank", bank) :
-                new ObjectParameter("bank", typeof(string));
-    
-            var priceParameter = price.HasValue ?
-                new ObjectParameter("price", price) :
-                new ObjectParameter("price", typeof(long));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            var descParameter = desc != null ?
-                new ObjectParameter("desc", desc) :
-                new ObjectParameter("desc", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertCheck", pidParameter, numberParameter, dateParameter, bankParameter, priceParameter, typeParameter, descParameter);
-        }
-    
-        public virtual int UpdateCheck(Nullable<int> id, string number, string date, string bank, Nullable<long> price, string type, string desc)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var numberParameter = number != null ?
-                new ObjectParameter("number", number) :
-                new ObjectParameter("number", typeof(string));
-    
-            var dateParameter = date != null ?
-                new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(string));
-    
-            var bankParameter = bank != null ?
-                new ObjectParameter("bank", bank) :
-                new ObjectParameter("bank", typeof(string));
-    
-            var priceParameter = price.HasValue ?
-                new ObjectParameter("price", price) :
-                new ObjectParameter("price", typeof(long));
-    
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            var descParameter = desc != null ?
-                new ObjectParameter("desc", desc) :
-                new ObjectParameter("desc", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCheck", idParameter, numberParameter, dateParameter, bankParameter, priceParameter, typeParameter, descParameter);
-        }
-    
-        public virtual int InsertPayment(Nullable<int> id, Nullable<long> pay, string date, string status, string save)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var payParameter = pay.HasValue ?
-                new ObjectParameter("Pay", pay) :
-                new ObjectParameter("Pay", typeof(long));
-    
-            var dateParameter = date != null ?
-                new ObjectParameter("date", date) :
-                new ObjectParameter("date", typeof(string));
-    
-            var statusParameter = status != null ?
-                new ObjectParameter("status", status) :
-                new ObjectParameter("status", typeof(string));
-    
-            var saveParameter = save != null ?
-                new ObjectParameter("save", save) :
-                new ObjectParameter("save", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertPayment", idParameter, payParameter, dateParameter, statusParameter, saveParameter);
-        }
-    
-        public virtual int MinesDeptor(Nullable<int> id, Nullable<long> deptor)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var deptorParameter = deptor.HasValue ?
-                new ObjectParameter("deptor", deptor) :
-                new ObjectParameter("deptor", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MinesDeptor", idParameter, deptorParameter);
         }
     }
 }

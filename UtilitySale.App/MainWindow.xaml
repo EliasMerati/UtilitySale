@@ -7,70 +7,87 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Transparent" AllowsTransparency="True" FontFamily="b nazanin" Loaded="Window_Loaded">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Height="680" RadiusX="10" RadiusY="10" Margin="10,10,0,0" Stroke="#FFFCFF00" VerticalAlignment="Top" Width="1180" MouseDown="Rectangle_MouseDown">
+        <Rectangle HorizontalAlignment="Left" Height="680" RadiusX="10" RadiusY="10" Margin="10,10,0,0" VerticalAlignment="Top" Width="1180" MouseDown="Rectangle_MouseDown">
+            <Rectangle.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFF0005" Offset="0"/>
+                    <GradientStop Color="#FFFFF400" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+            <Rectangle.Effect>
+                <DropShadowEffect BlurRadius="10"/>
+            </Rectangle.Effect>
 
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0.003"/>
-                    <GradientStop Color="#F3474646" Offset="0.136"/>
+                    <GradientStop Color="#FF394437" Offset="0.136"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Menu HorizontalAlignment="Left" Height="42" FlowDirection="RightToLeft" FontFamily="a hamase" FontSize="20" Margin="10,44,0,0" VerticalAlignment="Top" Width="1180" Background="#FFFBF75B">
+        <Menu HorizontalAlignment="Left" Height="42" FlowDirection="RightToLeft" FontFamily="a hamase" FontSize="20" Margin="10,44,0,0" VerticalAlignment="Top" Width="1180">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFF6BFBF" Offset="0"/>
+                    <GradientStop Color="#FFFFF36A" Offset="1"/>
+                </LinearGradientBrush>
+            </Menu.Background>
             <Menu.Effect>
                 <DropShadowEffect/>
             </Menu.Effect>
             <MenuItem Header="مشتریان" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="People_Click" >
-                <MenuItem.Icon>
-                    <Image Source="/Resources/Login Manager.ico" Width="35" Height="35" Margin="-15,-10"/>
-                </MenuItem.Icon>
+
             </MenuItem>
             <MenuItem Header="کالاها" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Product_click">
-                <MenuItem.Icon>
-                    <Image Source="/Resources/kthememgr.ico" Width="30" Height="30" Margin="-15,-10"/>
-                </MenuItem.Icon>
+
             </MenuItem>
 
             <MenuItem Header="ثبت فاکتور" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="NewInvoice_click" >
-                <MenuItem.Icon>
-                    <Image Source="/Resources/reminders.ico" Width="30" Height="30" Margin="-15,-10"/>
-                </MenuItem.Icon>
+
             </MenuItem>
 
             <MenuItem Header="عملیات دیتابیس" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" >
                 <MenuItem Header="نسخه ی پشتیبان" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Backup_click"/>
                 <MenuItem Header="بازگردانی" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Restor_click"/>
-                <MenuItem.Icon>
-                    <Image Source="/Resources/database-backup-icon-512.png" Width="30" Height="30" Margin="-15,-10"/>
-                </MenuItem.Icon>
+
             </MenuItem>
 
-            <MenuItem Header="بروزرسانی" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Upgrade_click">
-                <MenuItem.Icon>
-                    <Image Source="/Resources/upgrade.png" Width="30" Height="30" Margin="-15,-10"/>
-                </MenuItem.Icon>
+            <MenuItem Header="بروزرسانی" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Upgrade_click" IsEnabled="False">
+
             </MenuItem>
             <MenuItem Header="تنظیمات" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" >
                 <MenuItem Header="شرکت" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="company_click"/>
                 <MenuItem Header="حساب بانکی" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="account_click"/>
                 <MenuItem Header="ارزش افزوده" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="15,7,0,0" Click="Tax_click"/>
-                <MenuItem.Icon>
-                    <Image Source="/Resources/run.ico" Width="30" Height="30" Margin="-15,-10"/>
-                </MenuItem.Icon>
+
             </MenuItem>
-            <MenuItem Header="تماس با ما" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="310,7,0,0" Click="us_click">
+            <MenuItem Header="تماس با ما" FontWeight="Bold" FontSize="14" Foreground="Black" Margin="480,7,0,0" Click="us_click">
                 <MenuItem.Icon>
                     <Image Source="/Resources/voice-support.ico" Width="30" Height="30" Margin="-15,-10"/>
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <TextBlock x:Name="lbldate" HorizontalAlignment="Center"  Margin="29,10,957,646" TextWrapping="Wrap" Text="..." VerticalAlignment="Center" Height="44" Width="214" Foreground="#FFF9BD11" FontFamily="A hamase" FontSize="20"/>
+        <TextBlock x:Name="lbldate" HorizontalAlignment="Center"  Margin="29,10,957,646" TextWrapping="Wrap" Text="..." VerticalAlignment="Center" Height="44" Width="214" FontFamily="A hamase" FontSize="20">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFCFF00" Offset="0"/>
+                    <GradientStop Color="#FFFF0005" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+        </TextBlock>
         <Image HorizontalAlignment="Left" Cursor="Hand" Height="20" Margin="1154,18,0,0" VerticalAlignment="Top" Width="20" Source="/Resources/223.png" MouseDown="Image_MouseDown">
             <Image.Effect>
                 <DropShadowEffect/>
             </Image.Effect>
         </Image>
-        <Label Content="..." x:Name="Lblhour" FontFamily="A Hamase"  HorizontalAlignment="Left" Margin="160,5,0,0" VerticalAlignment="Top" Width="145" FontSize="20" Foreground="#FFDE8A38" FontWeight="Bold" />
+        <Label Content="..." x:Name="Lblhour" FontFamily="A Hamase"  HorizontalAlignment="Left" Margin="160,5,0,0" VerticalAlignment="Top" Width="145" FontSize="20" FontWeight="Bold" >
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="#FFFCFF00" Offset="1"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
         <Label Content="..." x:Name="LblVersion" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="92" Height="45" FontSize="22" Foreground="#FFF3E90C" Margin="9,0,0,10" FontFamily="A hamase"/>
         <Label Content=":نسخه ی نرم افزار" HorizontalAlignment="Left" Margin="106,0,0,1" VerticalAlignment="Bottom" Width="137" Height="45" FontSize="14" Foreground="#FF74DAE2" FontFamily="A hamase" FontWeight="Bold"/>
     </Grid>

@@ -15,6 +15,7 @@ namespace UtilitySale.Data
     {
         public int InvoiceID { get; set; }
         public string InvoiceDate { get; set; }
+        public Nullable<long> InvoicePricenottax { get; set; }
         public long InvoicePrice { get; set; }
         public int peopleID { get; set; }
         public string InvoiceDesc { get; set; }
